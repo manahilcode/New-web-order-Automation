@@ -3,12 +3,12 @@ name: NWO tests
 on:
   push:
     branches:
-      - develop
+      - develop  # Push trigger on develop branch
   pull_request:
     branches:
-      - main
+      - main     # PR trigger to main branch
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '0 7 * * *'  # Every day at 7:00 UTC
   workflow_dispatch:
 
 jobs:
@@ -29,8 +29,6 @@ jobs:
       - name: Install Playwright Chromium 
         run: npx playwright install chromium
 
-
-  
       - name: Install xmlstarlet
         run: sudo apt-get update && sudo apt-get install -y xmlstarlet
 
@@ -41,8 +39,11 @@ jobs:
           rm -rf playwright-report
           npx playwright test
 
+      - name: Debug Workspace Files
+        run: ls -la && ls -la playwright-report || echo "No report folder found"
+
       - name: Debug Test Results XML
-        run: cat results.xml
+        run: cat results.xml || echo "No results.xml file found"
 
       - name: Parse Playwright Test Results
         id: parse_results
@@ -67,9 +68,16 @@ jobs:
           echo "chromium: ✅ $passed_tests | ❌ $failed_tests | ⏭ $skipped_tests | 📈 ${pass_rate}%" > summary.txt
 
       - name: Compress Playwright Report
-        run: zip -r playwright-report.zip playwright-report/
+        if: always()
+        run: |
+          if [ -d "playwright-report" ]; then
+            zip -r playwright-report.zip playwright-report/
+          else
+            echo "playwright-report folder not found. Skipping compression."
+          fi
 
       - name: Upload Playwright Report Artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report

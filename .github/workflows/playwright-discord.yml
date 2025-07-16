@@ -1,9 +1,9 @@
-name: Playwright Tests
+name: NWO tests
 
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
       - main

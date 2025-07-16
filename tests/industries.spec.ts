@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { navigateToIndustries } from "../utils/src/industries";
+import { navigateToIndustries } from "../src/industries";
 
 const { BASE_URL } = require("../utils/constants");
 

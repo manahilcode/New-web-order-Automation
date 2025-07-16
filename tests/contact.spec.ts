@@ -3,7 +3,7 @@ import {
   navigateToContactForm,
   fillContactForm,
   submitContactForm,
-} from "../utils/src/contact";
+} from "../src/contact";
 
 const { BASE_URL } = require("../utils/constants");
 

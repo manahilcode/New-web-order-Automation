@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { Page } from "@playwright/test";
-import {projectpageselector} from "../selectors/projects"
+import {projectpageselector} from "../utils/selectors/projects"
 
 export async function navigateToProjectForm(page: Page): Promise<void> {
   await page.click('a[href="/projects"]');

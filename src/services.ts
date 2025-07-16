@@ -1,5 +1,5 @@
 import { Page, expect } from "@playwright/test";
-import { servicespageselector , servicespagesubselector } from "../selectors/services";
+import { servicespageselector , servicespagesubselector } from "../utils/selectors/services";
 
 export async function navigateToServices(page: Page): Promise<void> {
   const servicesMenu = page.locator('//span[text()="Services"]');

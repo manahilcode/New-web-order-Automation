@@ -1,5 +1,5 @@
 import { Page } from "@playwright/test";
-import { blogPageSelectors } from "../selectors/blogs";
+import { blogPageSelectors } from "../utils/selectors/blogs";
 
 export async function navigateToBlogs(page: Page): Promise<void> {
   // Navigate to the blogs page

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { navigateToServices } from "../utils/src/services";
+import { navigateToServices } from "../src/services";
 const { BASE_URL } = require("../utils/constants");
 
 test("Automate Proejcts naviagtion", async ({ page }) => {

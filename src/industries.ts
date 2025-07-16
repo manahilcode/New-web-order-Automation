@@ -1,5 +1,5 @@
 import { Page, expect } from "@playwright/test";
-import{industriespageselector, industriespagesubselector} from "../selectors/industries"
+import{industriespageselector, industriespagesubselector} from "../utils/selectors/industries"
 
 export async function navigateToIndustries(page: Page): Promise<void> {
   // Click on Industries first

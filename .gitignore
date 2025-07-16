@@ -1,0 +1,13 @@
+# Node modules
+node_modules/
+
+# Playwright test outputs
+test-results/
+
+playwright-report/
+
+blob-report/
+playwright/.cache/
+
+# Environment files
+.env

@@ -1,0 +1,101 @@
+name: NWO tests
+
+on:
+  push:
+    branches:
+      - develop  # Push trigger on develop branch
+  pull_request:
+    branches:
+      - main     # PR trigger to main branch
+  schedule:
+    - cron: '0 7 * * *'  # Every day at 7:00 UTC
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium 
+        run: npx playwright install chromium
+
+      - name: Install xmlstarlet
+        run: sudo apt-get update && sudo apt-get install -y xmlstarlet
+
+      - name: Run Playwright Tests
+        id: playwright_tests
+        continue-on-error: true
+        run: |
+          rm -rf playwright-report
+          npx playwright test
+
+      - name: Debug Workspace Files
+        run: ls -la && ls -la playwright-report || echo "No report folder found"
+
+      - name: Debug Test Results XML
+        run: cat results.xml || echo "No results.xml file found"
+
+      - name: Parse Playwright Test Results
+        id: parse_results
+        run: |
+          total_tests=$(xmlstarlet sel -t -v "/testsuites/@tests" results.xml 2>/dev/null || echo 0)
+          failed_tests=$(xmlstarlet sel -t -v "/testsuites/@failures" results.xml 2>/dev/null || echo 0)
+          skipped_tests=$(xmlstarlet sel -t -v "/testsuites/@skipped" results.xml 2>/dev/null || echo 0)
+          passed_tests=$((total_tests - (failed_tests + skipped_tests)))
+
+          if [ "$total_tests" -gt 0 ]; then
+            pass_rate=$((100 * passed_tests / total_tests))
+          else
+            pass_rate=0
+          fi
+
+          if [ $failed_tests -eq 0 ]; then
+            STATUS="✅ Tests Passed"
+          else
+            STATUS="❌ Tests Failed"
+          fi
+
+          echo "chromium: ✅ $passed_tests | ❌ $failed_tests | ⏭ $skipped_tests | 📈 ${pass_rate}%" > summary.txt
+
+      - name: Compress Playwright Report
+        if: always()
+        run: |
+          if [ -d "playwright-report" ]; then
+            zip -r playwright-report.zip playwright-report/
+          else
+            echo "playwright-report folder not found. Skipping compression."
+          fi
+
+      - name: Upload Playwright Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report.zip
+          retention-days: 7
+
+      - name: Send Discord Notification
+        if: always()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          ARTIFACT_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          if [ -f summary.txt ]; then
+            MESSAGE="**Playwright Tests Summary**\n\n$(cat summary.txt)\n\n[View GitHub Action Run]($ARTIFACT_URL)"
+          else
+            MESSAGE="⚠️ Playwright tests ran, but no summary was generated. Check logs for issues.\n\n[View GitHub Action Run]($ARTIFACT_URL)"
+          fi
+
+          curl -X POST -H "Content-Type: application/json" \
+            --data "{\"content\": \"$MESSAGE\"}" "$DISCORD_WEBHOOK_URL"

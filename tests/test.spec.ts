@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-
+import percySnapshot from '@percy/playwright';
 test("TC01 -- navigate through tabs and verify page content", async ({
   page,
 }) => {
@@ -77,4 +77,5 @@ test("TC01 -- navigate through tabs and verify page content", async ({
     page.click('a[href*="grumptoken.com"]'),
   ]);
   await popup.waitForLoadState("load");
+    await percySnapshot(page, 'test');
 });

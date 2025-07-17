@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-
+import percySnapshot from '@percy/playwright';
 test("navigate through tabs and verify page content", async ({ page }) => {
   await page.goto("https://www.newweborder.co/");
 
@@ -26,4 +26,5 @@ test("navigate through tabs and verify page content", async ({ page }) => {
   await page.locator(".div-one").click();
 
   await page.waitForTimeout(2000);
+    await percySnapshot(page, 'header');
 });

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import percySnapshot from '@percy/playwright';
 
 test("Homepage should contain legacy branding text", async ({ page }) => {
   await page.goto("https://www.newweborder.co/");
@@ -29,4 +30,5 @@ test("Homepage should contain legacy branding text", async ({ page }) => {
   });
   await expect(button).toBeVisible();
   await button.click();
+    await percySnapshot(page, 'body');
 });

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-
+import percySnapshot from '@percy/playwright';
 test("Footer navigation verification", async ({ page, context }) => {
   await page.goto("https://www.newweborder.co/");
 
@@ -35,4 +35,5 @@ test("Footer navigation verification", async ({ page, context }) => {
 
   // External site
   await clickAndWait('a[href*="grumptoken.com"]');
+    await percySnapshot(page, 'footer');
 });

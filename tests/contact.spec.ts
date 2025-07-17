@@ -4,7 +4,7 @@ import {
   fillContactForm,
   submitContactForm,
 } from "../src/contact";
-
+import percySnapshot from '@percy/playwright';
 const { BASE_URL } = require("../utils/constants");
 
 test("Fill and submit the contact form", async ({ page }) => {
@@ -22,4 +22,5 @@ test("Fill and submit the contact form", async ({ page }) => {
   );
 
   await submitContactForm(page);
+    await percySnapshot(page, 'contact');
 });

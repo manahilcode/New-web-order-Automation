@@ -29,7 +29,7 @@ export async function visitProjectCards(page: Page): Promise<void> {
         console.log("Opened external link:", await newTab.title());
       } catch (error) {
         console.warn(
-          '⚠️ Timeout while waiting for "load" state on the link. Trying "domcontentloaded"'
+          'Timeout while waiting for "load" state on the link. Trying "domcontentloaded"'
         );
         try {
           await newTab.waitForLoadState("domcontentloaded", { timeout: 20000 }); // 15s for partial load
@@ -39,13 +39,13 @@ export async function visitProjectCards(page: Page): Promise<void> {
           );
         } catch (innerError) {
           console.error(
-            '❌ Timeout on both "load" and "domcontentloaded" for: ${await newTab.url()}'
+            'Timeout on both "load" and "domcontentloaded"'
           );
         }
       }
       await newTab.close();
     } else {
-      console.log("No external link found in: ${selector}");
+      console.log("No external link found for this specific section");
     }
 
     await page.click('a[href="/projects"]');

@@ -1,39 +1,19 @@
-<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="32.85356599999987">
-<testsuite name="test.spec.ts" timestamp="2025-08-01T06:46:24.956Z" hostname="" tests="1" failures="1" skipped="0" time="30.366" errors="0">
-<testcase name="TC01 -- navigate through tabs and verify page content" classname="test.spec.ts" time="30.366">
-<failure message="test.spec.ts:3:5 TC01 -- navigate through tabs and verify page content" type="FAILURE">
-<![CDATA[  test.spec.ts:3:5 › TC01 -- navigate through tabs and verify page content ─────────────────────────
-
-    Test timeout of 30000ms exceeded.
-
-    Error: page.click: Test timeout of 30000ms exceeded.
-    Call log:
-      - waiting for locator('//div[@class="close"]')
-
-
-      12 |   await page.click('a[href="/blogs"]');
-      13 |   await page.locator("//a[normalize-space()='Contact']").click();
-    > 14 |   await page.click('//div[@class="close"]');
-         |              ^
-      15 |   await page.waitForTimeout(2000);
-      16 |   await page.click('a[href="/projects"]');
-      17 |   await page.waitForTimeout(1000);
-        at C:\Users\TECHNIFI\playwright\New-web-order-Automation\tests\test.spec.ts:14:14
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results\test-TC01----navigate-through-tabs-and-verify-page-content\test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
-    test-results\test-TC01----navigate-through-tabs-and-verify-page-content\video.webm
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-]]>
-</failure>
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="62.12660300000012">
+<testsuite name="projects.spec.ts" timestamp="2025-08-01T07:30:23.322Z" hostname="" tests="1" failures="0" skipped="0" time="59.815" errors="0">
+<testcase name="Automate Proejcts naviagtion" classname="projects.spec.ts" time="59.815">
 <system-out>
-<![CDATA[
-[[ATTACHMENT|test-results\test-TC01----navigate-through-tabs-and-verify-page-content\test-failed-1.png]]
-
-[[ATTACHMENT|test-results\test-TC01----navigate-through-tabs-and-verify-page-content\video.webm]]
+<![CDATA[Opened external link: Aiden AI
+Opened external link: Albin AI
+Opened external link: 404: NOT_FOUND
+Opened external link: PentAi
+Opened external link: SouthernMH | Buy & Sell Mobile Homes
+Opened external link: Fireclaw - найкращі комікси українською Фаеркло Україна
+Opened external link: The Positive Birth Book – Create your own free visual birth plan
+No external link found for this specific section
+No external link found for this specific section
+No external link found for this specific section
+No external link found for this specific section
+[[95mpercy[39m] Percy is not running, disabling snapshots
 ]]>
 </system-out>
 </testcase>

@@ -14,7 +14,7 @@ export async function navigateToServices(page: Page): Promise<void> {
     const service = page.locator(serviceXPath);
 
     await service.waitFor({ state: "visible", timeout: 10000 });
-    await service.scrollIntoViewIfNeeded();
+    //await service.scrollIntoViewIfNeeded();
 
     try {
       await Promise.all([

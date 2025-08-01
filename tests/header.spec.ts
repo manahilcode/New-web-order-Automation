@@ -23,7 +23,7 @@ test("navigate through tabs and verify page content", async ({ page }) => {
 
   await page.waitForTimeout(2000);
 
-  await page.locator(".div-one").click();
+ await page.locator("//a[normalize-space()='Contact']").click();
 
   await page.waitForTimeout(2000);
     await percySnapshot(page, 'header');

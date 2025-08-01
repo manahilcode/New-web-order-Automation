@@ -3,7 +3,8 @@ name: NWO tests
 on:
   push:
     branches:
-      - develop  # Push trigger on develop branch
+      - develop
+      - main # Push trigger on develop branch
   pull_request:
     branches:
       - main     # PR trigger to main branch
